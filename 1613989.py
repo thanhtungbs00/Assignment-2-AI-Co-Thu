@@ -5,9 +5,8 @@ INF = math.inf
 
 class Player:
     # student do not allow to change two first functions
-    def __init__(self, str_name, new_pos=None):
+    def __init__(self, str_name):
         self.str = str_name
-        self.new_pos = new_pos
 
     def __str__(self):
         return str(self.str)
@@ -28,6 +27,12 @@ class Player:
 
     def getValue(self, piece):
         animal = piece.type
+        if (self.str.lower() == "red"):
+            if piece.position == (9,3) or piece.position == (9,5) or piece.position == (8,4):
+                return -1
+        else:
+            if piece.position == (2,4) or piece.position == (1,5) or piece.position == (1,3):
+                return -1
         if animal.lower() == "chuot":
             return 1
         elif animal.lower() == "meo":
@@ -57,6 +62,7 @@ class Player:
 
     def getMaterialValue(self, piece):
         animal = piece.type
+        
         if animal.lower() == "chuot":
             return 500
         elif animal.lower() == "meo":
@@ -121,10 +127,10 @@ class Player:
         elif (piece.type.lower() == "cho"):
             lst_value = [[11, 15, 50, 99999, 50, 15, 11],
                          [10, 11, 15, 50   , 15, 11, 10],
-                         [9 , 10, 11, 15   , 11, 10,  9],
-                         [9 ,  0,  0, 10   ,  0,  0,  9],
-                         [8 ,  0,  0, 8    ,  0,  0,  8],
-                         [8 ,  0,  0, 8    ,  0,  0,  8],
+                         [9 , 10, 11, 15   , 12, 12,  9],
+                         [9 ,  0,  0, 10   ,  10, 11,  9],
+                         [8 ,  0,  0, 8    , 10, 11,  8],
+                         [8 ,  0,  0, 8    , 10, 11,  8],
                          [8 ,  8,  8, 8    ,  8,  8,  8],
                          [8 ,  8,  8, 8    , 13, 10,  8],
                          [8 ,  8,  8, 0    , 12, 12,  8]]
@@ -179,10 +185,10 @@ class Player:
             lst_value = [[25, 30, 50, 99999, 50, 30, 25],
                          [25, 25, 30, 50   , 30, 25, 25],
                          [18, 20, 20, 30   , 20, 20, 18],
-                         [16,  0,  0, 16   ,  0,  0, 16],
-                         [14,  0,  0, 14   ,  0,  0, 14],
-                         [12,  0,  0, 12   ,  0,  0, 12],
-                         [10, 15, 14, 14   , 14, 14, 12],
+                         [16, 11, 11, 16   , 10, 10, 16],
+                         [14, 11, 11, 14   , 10, 10, 14],
+                         [12, 11, 11, 12   , 10, 10, 12],
+                         [10, 15, 15, 14   , 14, 14, 12],
                          [11, 14, 11, 11   , 11, 11, 11],
                          [11, 11, 11, 0    , 11, 11, 11]]
             if (list_type.lower() == "red"):
@@ -473,12 +479,6 @@ class Player:
     def next_move(self, state):
         depth = 3
         local_state = copy.deepcopy(state)
-        
-        # piece = Piece('SuTu', (7, 2))
-        # ls = self.lstmove(piece, state)
-        # for x in ls:
-        #     print(x)
-        #new_pos = (6, 1)
 
         if (self.str.lower() == "black"):
             result = self.alphabeta(local_state, depth, -INF, +INF, True, False)
